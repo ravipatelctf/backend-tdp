@@ -69,7 +69,7 @@ async function readTutorByAddress(queryData) {
     }
 }
 
-app.get("/api/tutors", async (req, res) => {
+app.post("/api/tutors", async (req, res) => {
     try {
         const tutors = await readTutorByAddress(req.body);
         if (tutors) {
@@ -102,7 +102,7 @@ async function addNewTutor(tutorData) {
     }
 }
 
-app.post("/api/tutors", async (req, res) => {
+app.post("/api/tutors/newTutor", async (req, res) => {
     try {
         const savedTutor = await addNewTutor(req.body);
         if (savedTutor) {
