@@ -44,6 +44,7 @@ initializeDatabase();
 
 
 //---------------------------------------------------------------------------------------------------------
+// home route
 app.get("/", async (req, res) => {
     try {
         res
@@ -69,9 +70,20 @@ async function readTutorByAddress(queryData) {
     }
 }
 
-app.post("/api/tutors", async (req, res) => {
+app.get("/api/tutors", async (req, res) => {
+
     try {
-        const tutors = await readTutorByAddress(req.body);
+        const queryObj = {};
+        if (req.query.country && req.query.stateOrUT && req.query.district) {
+            queryObj.country = req.query.country;
+            queryObj.stateOrUT = req.query.stateOrUT;
+            queryObj.district = req.query.district;
+        } else {
+            res.status(400).json({error: "All fields are required!"})
+            return;
+        }
+        // console.log("queryObj:", queryObj)
+        const tutors = await readTutorByAddress(queryObj);
         if (tutors) {
             res
                 .status(200)
@@ -102,7 +114,7 @@ async function addNewTutor(tutorData) {
     }
 }
 
-app.post("/api/tutors/newTutor", async (req, res) => {
+app.post("/api/tutors", async (req, res) => {
     try {
         const savedTutor = await addNewTutor(req.body);
         if (savedTutor) {
