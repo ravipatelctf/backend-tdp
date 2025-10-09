@@ -1,12 +1,12 @@
-const {initializeDatabase} = require("./db/db.connect");
-// const fs = require("fs");
-const Tutor = require("./models/tutor.models");
-const express = require("express");
+import { initializeDatabase } from "./db/db.connect.js";
+import fs from "fs";
+import Tutor from "./models/tutor.models.js";
+import express, { json } from "express";
 
 const app = express()
-app.use(express.json());
+app.use(json());
 
-const cors = require("cors");
+import cors from "cors";
 const corsOptions = {
   origin: "*",
   credentials: true,
@@ -17,29 +17,29 @@ app.use(cors(corsOptions));
 initializeDatabase();
 
 //---------------------------------------------------------------------------------------------------------
-// const jsonData = fs.readFileSync("tutorsData1000.json", "utf-8");
-// const tutorsData = JSON.parse(jsonData);
-// // seed tutor database
-// async function seedTutors() {
-//     try {
-//         for (const tutorData of tutorsData) {
-//             const newTutor = new Tutor({
-//                 name: tutorData.name,
-//                 phoneNumber: tutorData.phoneNumber,
-//                 country: tutorData.country,
-//                 stateOrUT: tutorData.stateOrUT,
-//                 district: tutorData.district,
-//                 pincode: tutorData.pincode,
-//                 landmark: tutorData.landmark
-//             });
-//             await newTutor.save();
-//         }
-//         console.log("Tutor collection seeded successfully.");
-//     } catch (error) {
-//         throw error;
-//     }
-// }
-// seedTutors()
+const jsonData = fs.readFileSync("tutors.json", "utf-8");
+const tutorsData = JSON.parse(jsonData);
+// seed tutor database
+async function seedTutors() {
+    try {
+        for (const tutorData of tutorsData) {
+            const newTutor = new Tutor({
+                name: tutorData.name,
+                phoneNumber: tutorData.phoneNumber,
+                country: tutorData.country,
+                stateOrUT: tutorData.stateOrUT,
+                district: tutorData.district,
+                pincode: tutorData.pincode,
+                landmark: tutorData.landmark
+            });
+            await newTutor.save();
+        }
+        console.log("Tutor collection seeded successfully.");
+    } catch (error) {
+        throw error;
+    }
+}
+seedTutors()
 //---------------------------------------------------------------------------------------------------------
 
 
@@ -63,7 +63,7 @@ app.get("/", async (req, res) => {
 // get a tutor list by query data
 async function readTutorByAddress(queryData) {
     try {       
-        const tutors = await Tutor.find(queryData);
+        const tutors = await find(queryData);
         return tutors;
     } catch (error) {
         throw error;

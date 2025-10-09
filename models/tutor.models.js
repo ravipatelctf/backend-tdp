@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const tutorSchema = new mongoose.Schema({
+const tutorSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -36,6 +36,6 @@ const tutorSchema = new mongoose.Schema({
 },
 );
 
-const Tutor = mongoose.model("Tutor", tutorSchema);
+const Tutor = model("Tutor", tutorSchema);
 
-module.exports = Tutor;
+export default Tutor;
