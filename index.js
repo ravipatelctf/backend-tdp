@@ -51,7 +51,7 @@ app.get("/auth/github/callback", async (req, res) => {
 })
 
 app.get("/auth/google", (req, res) => {
-    const googleAuthUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=http://localhost:${PORT}/auth/google/callback&response_type=code&scope=profile email`;
+    const googleAuthUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=${process.env.BACKEND_URL}:${process.env.PORT}/auth/google/callback&response_type=code&scope=profile email`;
     res.redirect(googleAuthUrl);
 })
 
